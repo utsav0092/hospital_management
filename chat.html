@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eres - Medical Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+        }
+
+        /* Keeping your existing sidebar styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 60px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            gap: 30px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar i {
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .sidebar i:hover {
+            color: #4CAF50;
+        }
+
+        /* Main content area */
+        .main-content {
+            margin-left: 60px;
+            padding: 20px;
+        }
+
+        /* Header section (from your existing code) */
+        .header {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            gap: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .header1 {
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+
+        .main_heading {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .paragraph {
+            color: #666;
+        }
+
+        /* Chat interface */
+        .chat-container {
+            display: flex;  
+            height: calc(100vh - 10px);
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-sidebar {
+            width: 250px;
+            background: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Full height */
+        }
+
+        .quick-actions {
+            flex: 1;
+            overflow-y: auto; /* Add scrollbar */
+            padding-right: 10px; /* Space for scrollbar */
+            margin-right: -10px; /* Compensate for padding */
+        }
+        
+        /* Style the scrollbar */
+        .quick-actions::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .quick-actions::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .quick-actions::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        
+        .quick-actions::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .quick-action-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .quick-action-btn:hover {
+            background: #e3f2fd;
+            border-color: #90caf9;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .quick-action-btn:last-child {
+            margin-bottom: 20px; /* Add space at the bottom of scrollable area */
+        }
+        
+
+        .chat-info {
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .chat-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .chat-info p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            max-width: 70%;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            margin-left: auto;
+            color: #1565c0;
+        }
+
+        .bot-message {
+            background: #f5f5f5;
+            margin-right: auto;
+            color: #333;
+        }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input textarea {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            resize: none;
+            height: 50px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            padding: 0 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #43a047;
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            margin-top: 20px;
+        }
+
+        .quick-action-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action-btn:hover {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="index.html"><i class="fas fa-th"></i></a>
+        <a href="./decision.html" style="text-decoration: none;"><i class="fas fa-user"></i></a>
+        <i class="fas fa-shopping-bag"></i>
+        <i class="fas fa-envelope"></i>
+        <a href="./medicine.html"><i class="fas fa-tv"></i></a>
+    </div>
+
+    <div class="main-content">
+        <!-- Keep your existing header -->
+        <div class="header1">
+            <!-- Your existing header content -->
+            <h1 class="main_heading">Medical Assistant</h1>
+            <p class="paragraph">Solve your health Query like your persnol Dr.</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-sidebar">
+                <div class="chat-info">
+                    <h3>Medical Assistant</h3>
+                    <p>Get instant answers to your health-related questions. For emergencies, please contact your doctor directly.</p>
+                </div>
+                
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="askQuestion('What should I do for a mild headache?')">
+                        🤕 Headache Remedies
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('What are common cold symptoms?')">
+                        🤒 Cold Symptoms
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('How can I improve my sleep?')">
+                        😴 Sleep Tips
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('What are good foods for immunity?')">
+                        🍎 Immunity Boosters
+                    </button>
+                    <!-- New buttons -->
+                    <button class="quick-action-btn" onclick="askQuestion('What are the symptoms of allergies?')">
+                        🤧 Allergy Symptoms
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('How to treat a minor burn?')">
+                        🔥 Burn Treatment
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('What helps with muscle pain?')">
+                        💪 Muscle Pain Relief
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('How to handle stress and anxiety?')">
+                        😰 Stress Management
+                    </button>
+                    <button class="quick-action-btn" onclick="askQuestion('What helps with digestion problems?')">
+                        🤢 Digestive Health
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-main">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">
+                        Hello! I'm your medical assistant. How can I help you today? Please note that I can provide general health information, but for specific medical concerns, always consult with your doctor.
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <textarea 
+                        id="user-input" 
+                        placeholder="Type your health-related question here..."
+                        onkeypress="handleKeyPress(event)"
+                    ></textarea>
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Database of common health queries and responses
+const healthDatabase = {
+    // Symptoms and their descriptions
+    "headache": {
+        symptoms: "Common symptoms include: Throbbing pain, Sensitivity to light and sound, Pressure in head",
+        remedies: "1. Rest in a quiet, dark room\n2. Stay hydrated\n3. Try over-the-counter pain relievers\n4. Apply a cold or warm compress\n5. Practice relaxation techniques",
+        warning: "Seek medical attention if headache is severe or accompanied by other symptoms."
+    },
+    "common cold": {
+        symptoms: "Common symptoms include: Runny nose, Sore throat, Cough, Congestion, Mild body aches",
+        remedies: "1. Get plenty of rest\n2. Stay hydrated\n3. Use saline nasal drops\n4. Try over-the-counter cold medications\n5. Gargle with warm salt water",
+        warning: "Most colds resolve within 7-10 days. Seek medical attention if symptoms worsen."
+    },
+    "fever": {
+        symptoms: "Signs include: Elevated body temperature, Chills, Sweating, Muscle aches, Weakness",
+        remedies: "1. Rest\n2. Stay hydrated\n3. Take fever-reducing medication\n4. Use a cold compress\n5. Wear light clothing",
+        warning: "Seek immediate medical attention if temperature exceeds 103°F (39.4°C)."
+    },
+    "upset stomach": {
+        symptoms: "Symptoms include: Nausea, Vomiting, Diarrhea, Stomach cramps, Loss of appetite",
+        remedies: "1. Follow the BRAT diet (Bananas, Rice, Applesauce, Toast)\n2. Stay hydrated\n3. Avoid fatty/spicy foods\n4. Try ginger tea\n5. Rest",
+        warning: "Seek medical attention if symptoms persist over 48 hours or if there's severe pain."
+    },
+    // New conditions...
+    "allergies": {
+        symptoms: "Common symptoms include: Sneezing, Runny nose, Itchy eyes, Skin rash, Congestion",
+        remedies: "1. Take antihistamines\n2. Use nasal sprays\n3. Keep windows closed during high pollen times\n4. Use air purifiers\n5. Shower after being outdoors",
+        warning: "Seek immediate medical attention if you experience difficulty breathing or severe reactions."
+    },
+    "burns": {
+        symptoms: "Signs include: Redness, Pain, Swelling, Blistering (in second-degree burns)",
+        remedies: "1. Cool the burn under cool running water\n2. Apply aloe vera gel\n3. Cover with sterile gauze\n4. Take over-the-counter pain relievers\n5. Keep the area clean",
+        warning: "Seek medical attention for large burns, burns on face/hands, or if skin is severely blistered."
+    },
+    "muscle pain": {
+        symptoms: "Symptoms include: Soreness, Stiffness, Swelling, Limited range of motion, Weakness",
+        remedies: "1. Apply ice for acute pain\n2. Use heat for chronic pain\n3. Gentle stretching\n4. Over-the-counter pain relievers\n5. Rest the affected area",
+        warning: "Seek medical attention if pain is severe or persists for more than a week."
+    },
+    "stress": {
+        symptoms: "Signs include: Anxiety, Restlessness, Difficulty sleeping, Irritability, Muscle tension",
+        remedies: "1. Practice deep breathing exercises\n2. Try meditation or yoga\n3. Exercise regularly\n4. Maintain a routine\n5. Get adequate sleep",
+        warning: "Seek professional help if stress significantly impacts daily life or if you experience panic attacks."
+    },
+    "digestion": {
+        symptoms: "Symptoms include: Bloating, Gas, Stomach pain, Acid reflux, Irregular bowel movements",
+        remedies: "1. Eat smaller, frequent meals\n2. Avoid trigger foods\n3. Stay hydrated\n4. Take probiotics\n5. Exercise regularly",
+        warning: "Seek medical attention for severe abdominal pain or persistent digestive issues."
+    }
+};
+
+
+// Function to handle message sending
+function sendMessage() {
+    const userInput = document.getElementById('user-input');
+    const message = userInput.value.trim().toLowerCase();
+    
+    if (message === '') {
+        return;
+    }
+
+    // Add user message to chat
+    addMessageToChat(userInput.value, 'user');
+    userInput.value = '';
+
+    // Generate response based on user input
+    let response = generateResponse(message);
+    addMessageToChat(response, 'bot');
+}
+
+// Function to generate responses based on user input
+function generateResponse(message) {
+    // Check for keywords in the message
+    for (let condition in healthDatabase) {
+        if (message.includes(condition)) {
+            const info = healthDatabase[condition];
+            return `${info.symptoms}\n\nRecommended remedies:\n${info.remedies}\n\nWarning: ${info.warning}`;
+        }
+    }
+
+    // Default responses for quick action buttons
+    switch (message.toLowerCase()) {
+        case 'what should i do for a mild headache?':
+            return healthDatabase.headache.remedies;
+        case 'what are common cold symptoms?':
+            return healthDatabase['common cold'].symptoms;
+        case 'how can i improve my sleep?':
+            return "Tips for better sleep:\n1. Stick to a regular sleep schedule\n2. Create a relaxing bedtime routine\n3. Keep your bedroom cool and dark\n4. Avoid screens before bedtime\n5. Limit caffeine and alcohol\n6. Exercise regularly (but not close to bedtime)\n7. Use comfortable bedding";
+        case 'what are good foods for immunity?':
+            return "Foods that boost immunity:\n1. Citrus fruits (rich in Vitamin C)\n2. Leafy greens\n3. Yogurt and fermented foods\n4. Garlic and ginger\n5. Nuts and seeds\n6. Berries\n7. Green tea\n\nRemember to maintain a balanced diet and stay hydrated!";
+        case 'what are the symptoms of allergies?':
+            return healthDatabase.allergies.symptoms + "\n\n" + healthDatabase.allergies.remedies;
+        case 'how to treat a minor burn?':
+            return healthDatabase.burns.remedies + "\n\nImportant: " + healthDatabase.burns.warning;
+        case 'what helps with muscle pain?':
+            return healthDatabase['muscle pain'].remedies + "\n\nNote: " + healthDatabase['muscle pain'].warning;
+        case 'how to handle stress and anxiety?':
+            return healthDatabase.stress.remedies + "\n\nRemember: " + healthDatabase.stress.warning;
+        case 'what helps with digestion problems?':
+            return healthDatabase.digestion.remedies + "\n\nCAUTION: " + healthDatabase.digestion.warning;
+        default:
+            return "I can help you with information about common conditions like headaches, fever, allergies, burns, muscle pain, stress, and digestive issues. Please specify your query or use the quick action buttons.";
+    }
+}
+
+// Function to add message to chat
+function addMessageToChat(message, sender, className = '') {
+    const chatMessages = document.getElementById('chat-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}-message ${className}`;
+    messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Function to handle enter key press
+function handleKeyPress(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+// Function to handle quick action questions
+function askQuestion(question) {
+    document.getElementById('user-input').value = question;
+    sendMessage();
+}
+    </script>
+</body>
+</html>

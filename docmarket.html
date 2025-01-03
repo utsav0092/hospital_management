@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eres - Hospital Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #e8f0f0;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 60px;
+            background: white;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .sidebar i {
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            padding: 20px;
+        }
+
+        .header1 {
+            margin-bottom: 30px;
+        }
+
+        .main_heading {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .paragraph {
+            color: #666;
+        }
+
+        .medicine-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+
+        .header {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            gap: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .profile-section {
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .info-section {
+            padding: 10px;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .additional-info {
+            padding: 10px;
+        }
+
+        .add-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .medicine-list {
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .medicine-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .medicine-table th,
+        .medicine-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .medicine-table th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background: #ff7b7b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .medicine-id {
+            background: #4CAF50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="./index.html"><i class="fas fa-th"></i></a>
+        <i class="fas fa-user"></i>
+        <i class="fas fa-shopping-bag"></i>
+        <a href="./chat.html"><i class="fas fa-envelope"></i></a>
+        <a href="./medicine.html"><i class="fas fa-tv"></i></a>
+    </div>
+
+    <div class="main-content">
+        <div class="header1">
+            <h1 class="main_heading">Medicine Management</h1>
+            <p class="paragraph">Manage your hospital's medicine inventory</p>
+        </div>
+
+        <div class="header">
+            <!-- Profile Photo Section -->
+            <div class="profile-section">
+                <img id="userProfileImage" src="./images/doctor/2.jpg" alt="Profile" class="profile-image">
+            </div>
+
+            <!-- Basic Info Section -->
+            <div class="info-section">
+                <div class="info-item">
+                    <div class="info-label">Name:</div>
+                    <div id="userName" class="info-value">Rameshkumar Rao</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email:</div>
+                    <div id="userEmail" class="info-value"></div>RR5252@gmail.com
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Mobile:</div>
+                    <div id="userPhone" class="info-value">+91 78978 44525</div>
+                </div>
+            </div>
+
+            <!-- Additional Info Section -->
+            <div class="additional-info">
+                <div class="info-item">
+                    <div class="info-label">Gender:</div>
+                    <div id="userGender" class="info-value">Male</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Assign Doctor:</div>
+                    <div id="userSpecialty" class="info-value">DR Mr. Daulat Hussain</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="medicine-section">
+            <div class="section-header">
+                <h2>Add New Medicine</h2>
+            </div>
+            <form id="addMedicineForm" class="add-form">
+                <div class="form-group">
+                    <input type="text" id="medicineName" placeholder="Medicine Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" id="manufactureDate" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" id="expiryDate" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="price" placeholder="Price" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="add-btn">Add Medicine</button>
+                </div>
+            </form>
+
+            <a href="second.html" class="btn" style="text-decoration: none; display: inline-block;">
+                View Medicines List
+            </a>
+
+            <div class="medicine-list">
+                <table class="medicine-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Issue Date</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medicineTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+
+        <div class="medicine-section">
+            <div class="section-header">
+                <h2>Add New Medicine</h2>
+            </div>
+            <form id="addMedicineForm" class="add-form">
+                <div class="form-group">
+                    <input type="text" id="medicineName" placeholder="Medicine Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="price" placeholder="Price" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" id="manufactureDate" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" id="expiryDate" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="add-btn">Add Medicine</button>
+                </div>
+            </form>
+
+            <a href="medicine.html" class="btn" style="text-decoration: none; display: inline-block;">
+                View Medicines List
+            </a>
+
+            <div class="medicine-list">
+                <table class="medicine-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Issue Date</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medicineTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const addMedicineForm = document.getElementById('addMedicineForm');
+        const medicineTableBody = document.getElementById('medicineTableBody');
+        let medicineId = 1;
+        let medicines = [];
+
+        // Load existing medicines from localStorage
+        if (localStorage.getItem('medicines')) {
+            medicines = JSON.parse(localStorage.getItem('medicines'));
+            medicineId = medicines.length > 0 ? Math.max(...medicines.map(m => m.id)) + 1 : 1;
+        }
+
+        // Event listener for form submission
+        addMedicineForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate dates
+            const issueDate = document.getElementById('manufactureDate').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+
+            if (new Date(expiryDate) <= new Date(issueDate)) {
+                alert('Expiry date must be later than the issue date.');
+                return;
+            }
+
+            const medicine = {
+                id: medicineId,
+                name: document.getElementById('medicineName').value,
+                price: document.getElementById('price').value,
+                issueDate: issueDate,
+                expiryDate: expiryDate
+            };
+
+            medicines.push(medicine);
+            medicineId++;
+
+            // Save to localStorage
+            localStorage.setItem('medicines', JSON.stringify(medicines));
+
+            updateTable();
+            this.reset();
+        });
+
+        function updateTable() {
+            const tbody = document.getElementById('medicineTableBody');
+            tbody.innerHTML = '';
+
+            medicines.forEach(medicine => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                <td class="medicine-id">${medicine.id}</td>
+                <td>${medicine.name}</td>
+                <td>$${medicine.price}</td>
+                <td>${formatDate(medicine.issueDate)}</td>
+                <td>${formatDate(medicine.expiryDate)}</td>
+            `;
+            });
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Initialize the table
+        updateTable();
+    });
+
+
+    // JavaScript for Medicine Management To-Do List
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const addMedicineForm = document.getElementById('addMedicineForm');
+    //     const medicineTableBody = document.getElementById('medicineTableBody');
+
+    //     let medicines = []; // Array to store medicines
+    //     let medicineId = 1; // Initial medicine ID
+
+    //     // Function to format date into a readable format
+    //     function formatDate(dateString) {
+    //         const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    //         return new Date(dateString).toLocaleDateString(undefined, options);
+    //     }
+
+    //     // Function to update the table with medicines
+    //     function updateMedicineTable() {
+    //         medicineTableBody.innerHTML = ''; // Clear existing table rows
+
+    //         medicines.forEach((medicine) => {
+    //             const row = document.createElement('tr');
+    //             row.innerHTML = `
+    //                 <td class="medicine-id">${medicine.id}</td>
+    //                 <td>${medicine.name}</td>
+    //                 <td>${formatDate(medicine.manufactureDate)}</td>
+    //                 <td>${formatDate(medicine.expiryDate)}</td>
+    //                 <td>$${medicine.price}</td>
+    //                 <td><button class="delete-btn" data-id="${medicine.id}">Delete</button></td>
+    //             `;
+    //             medicineTableBody.appendChild(row);
+    //         });
+
+    //         // Add event listeners to delete buttons
+    //         document.querySelectorAll('.delete-btn').forEach((button) => {
+    //             button.addEventListener('click', function () {
+    //                 const id = this.getAttribute('data-id');
+    //                 deleteMedicine(id);
+    //             });
+    //         });
+    //     }
+
+    //     // Function to delete a medicine by ID
+    //     function deleteMedicine(id) {
+    //         medicines = medicines.filter((medicine) => medicine.id !== id);
+    //         updateMedicineTable(); // Refresh the table
+    //     }
+
+    //     // Event listener for form submission
+    //     addMedicineForm.addEventListener('submit', function (e) {
+    //         e.preventDefault(); // Prevent page reload
+
+    //         const manufactureDate = document.getElementById('manufactureDate').value;
+    //         const expiryDate = document.getElementById('expiryDate').value;
+
+    //         if (new Date(expiryDate) <= new Date(manufactureDate)) {
+    //             alert('Expiry date must be later than the manufacture date.');
+    //             return;
+    //         }
+
+    //         // Create a new medicine object
+    //         const medicine = {
+    //             id: `M-${String(medicineId).padStart(3, '0')}`,
+    //             name: document.getElementById('medicineName').value,
+    //             manufactureDate: manufactureDate,
+    //             expiryDate: expiryDate,
+    //             price: document.getElementById('price').value
+    //         };
+
+    //         medicines.push(medicine); // Add medicine to the array
+    //         medicineId++; // Increment ID for the next medicine
+
+    //         updateMedicineTable(); // Update the table
+    //         addMedicineForm.reset(); // Reset the form
+    //     });
+
+    //     // Initialize the table
+    //     updateMedicineTable();
+    // });
+</script>
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Medicines</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        .btn-group {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .back-btn {
+            background: #666;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Medicines List</h2>
+
+        <div class="btn-group">
+            <a href="./docmarket.html" class="btn back-btn">Back to Entry</a>
+            <button class="btn" onclick="exportToPDF()">Export as PDF</button>
+            <button class="btn" onclick="exportToImage()">Export as Image</button>
+            <button class="btn" onclick="exportToCSV()">Export as CSV</button>
+        </div>
+
+        <div id="medicineTableContainer">
+            <table id="medicineTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Issue Date</th>
+                        <th>Expiry Date</th>
+                    </tr>
+                </thead>
+                <tbody id="medicineTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Load and display medicines from localStorage
+        function loadMedicines() {
+            const medicines = JSON.parse(localStorage.getItem('medicines')) || [];
+            const tbody = document.getElementById('medicineTableBody');
+            tbody.innerHTML = '';
+
+            medicines.forEach(medicine => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${medicine.id}</td>
+                    <td>${medicine.name}</td>
+                    <td>${medicine.price}</td>
+                    <td>${medicine.issueDate}</td>
+                    <td>${medicine.expiryDate}</td>
+                `;
+            });
+        }
+
+        // Export as PDF
+        async function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const element = document.getElementById('medicineTableContainer');
+            const canvas = await html2canvas(element);
+            const imgData = canvas.toDataURL('image/png');
+
+            const imgWidth = 190;
+            const pageHeight = 290;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 10;
+
+            doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            doc.save('medicines-list.pdf');
+        }
+
+        // Export as Image
+        async function exportToImage() {
+            const element = document.getElementById('medicineTableContainer');
+            const canvas = await html2canvas(element);
+            const link = document.createElement('a');
+            link.download = 'medicines-list.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Export as CSV
+        function exportToCSV() {
+            const medicines = JSON.parse(localStorage.getItem('medicines')) || [];
+            const csvContent =
+                "ID,Name,Price,Issue Date,Expiry Date\n" +
+                medicines.map(medicine =>
+                    $`{ medicine.id }`, $`{ medicine.name }`, $`{ medicine.price }`, $`{ medicine.issueDate }`, $`{ medicine.expiryDate }`
+                ).join("\n");
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'medicines-list.csv';
+            link.click();
+        }
+
+        // Load medicines when page loads
+        loadMedicines();
+    </script>
+</body>
+
+</html>

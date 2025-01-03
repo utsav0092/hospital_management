@@ -1,0 +1,5 @@
+{
+   "m1" : { "id": "M-001", "name": "Paracetamol", "manufactureDate": "2023-01-01", "expiryDate": "2025-01-01", "price": 50 },
+    "m2" : { "id": "M-002", "name": "Aspirin", "manufactureDate": "2022-05-15", "expiryDate": "2024-05-15", "price": 100 },
+    "m3" : { "id": "M-003", "name": "Amoxicillin", "manufactureDate": "2023-03-20", "expiryDate": "2025-03-20", "price": 150 }
+}

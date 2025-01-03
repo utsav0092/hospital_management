@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Entry</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .form-container { max-width: 800px; margin: 0 auto; }
+        .btn { 
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Medicine Entry</h2>
+        <form id="medicineForm">
+            <div>
+                <label>Medicine Name:</label>
+                <input type="text" id="medicineName" required>
+            </div>
+            <div>
+                <label>Price:</label>
+                <input type="number" id="price" required>
+            </div>
+            <div>
+                <label>Issue Date:</label>
+                <input type="date" id="issueDate" required>
+            </div>
+            <div>
+                <label>Expiry Date:</label>
+                <input type="date" id="expiryDate" required>
+            </div>
+            <button type="submit" class="btn">Add Medicine</button>
+        </form>
+        
+        <a href="second.html" class="btn" style="text-decoration: none; display: inline-block;">
+            View Medicines List
+        </a>
+
+        <table id="medicineTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Issue Date</th>
+                    <th>Expiry Date</th>
+                </tr>
+            </thead>
+            <tbody id="medicineTableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let medicineId = 1;
+        let medicines = [];
+
+        // Load existing medicines from localStorage
+        if (localStorage.getItem('medicines')) {
+            medicines = JSON.parse(localStorage.getItem('medicines'));
+            medicineId = medicines.length > 0 ? Math.max(...medicines.map(m => m.id)) + 1 : 1;
+        }
+
+        document.getElementById('medicineForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const medicine = {
+                id: medicineId,
+                name: document.getElementById('medicineName').value,
+                price: document.getElementById('price').value,
+                issueDate: document.getElementById('issueDate').value,
+                expiryDate: document.getElementById('expiryDate').value
+            };
+
+            medicines.push(medicine);
+            medicineId++;
+
+            // Save to localStorage
+            localStorage.setItem('medicines', JSON.stringify(medicines));
+
+            updateTable();
+            this.reset();
+        });
+
+        function updateTable() {
+            const tbody = document.getElementById('medicineTableBody');
+            tbody.innerHTML = '';
+
+            medicines.forEach(medicine => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${medicine.id}</td>
+                    <td>${medicine.name}</td>
+                    <td>${medicine.price}</td>
+                    <td>${medicine.issueDate}</td>
+                    <td>${medicine.expiryDate}</td>
+                `;
+            });
+        }
+
+        // Initial table update
+        updateTable();
+    </script>
+</body>
+</html>

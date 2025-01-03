@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eres - Hospital Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="#"><i class="fas fa-th"></i></a>
+        <a href="./decision.html" style="text-decoration: none;"><i class="fas fa-user"></i></a>
+        <i class="fas fa-shopping-bag"></i>
+        <a href="./chat.html"><i class="fas fa-envelope"></i></a>
+        <a href="./medicine.html"><i class="fas fa-tv"></i></a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome to Eres!</h1>
+            <p>Hospital Decentralized Medicical Center</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card patients">
+                <div class="stat-info">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Total Patient</div>
+                    <div class="stat-trend">+4%</div>
+                </div>
+                <i class="fas fa-heartbeat" style="color: white;"></i>
+            </div>
+
+            <div class="stat-card doctors">
+                <div class="stat-info">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Doctor</div>
+                    <div class="stat-trend">+4%</div>
+                </div>
+                <i class="fas fa-stethoscope" style="color: white;"></i>
+            </div>
+
+            <div class="stat-card appointments">
+                <div class="stat-info">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Appointment</div>
+                    <div class="stat-trend">+2%</div>
+                </div>
+                <i class="fas fa-calendar" style="color: white;"></i>
+            </div>
+
+            <div class="stat-card notifications">
+                <div class="stat-info">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Notifications</div>
+                    <div class="stat-trend">+5%</div>
+                </div>
+                <i class="fas fa-bell" style="color: white;"></i>
+            </div>
+        </div>
+        <div class="doctors-section">
+            <div class="section-header">
+                <h2>Top Rated Doctors</h2>
+                <a href="#" class="view-more">View more »</a>
+            </div>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <img src="./images/patiants/1.jpg" alt="Dr. Daulat Hussain" class="doctor-image">
+                    <div class="doctor-id">#D-001</div>
+                    <div class="doctor-name">DR Mr. Daulat Hussain</div>
+                    <div class="doctor-specialty">Cardiology</div>
+                </div>
+                <div class="doctor-card">
+                    <img src="./images/patiants/2.jpg" alt="Dr. John Smith" class="doctor-image">
+                    <div class="doctor-id">#D-002</div>
+                    <div class="doctor-name">DR Mr. John Smith</div>
+                    <div class="doctor-specialty">Cardiology</div>
+                </div>
+                <div class="doctor-card">
+                    <img src="./images/patiants/3.jpg" alt="Dr. Emily Johnson" class="doctor-image">
+                    <div class="doctor-id">#D-003</div>
+                    <div class="doctor-name">DR Mrs. Emily Johnson</div>
+                    <div class="doctor-specialty">Pediatrics</div>
+                </div>
+                <div class="doctor-card">
+                    <img src="./images/patiants/4.jpg" alt="Dr. Emily Johnson" class="doctor-image">
+                    <div class="doctor-id">#D-004</div>
+                    <div class="doctor-name">DR Mrs. Emily Johnson</div>
+                    <div class="doctor-specialty">Pediatrics</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="patient-list">
+            <div class="section-header">
+                <h2>Recent Patient</h2>
+                <a href="#" class="view-more">View more »</a>
+            </div>
+            <div class="patient-item">
+                <img src="./images//patiants/1.jpg" alt="John Doe" class="patient-avatar">
+                <div class="patient-info">
+                    <div class="patient-name">Mr. John Doe</div>
+                    <div class="patient-location">Springfield</div>
+                </div>
+            </div>
+            <div class="patient-item">
+                <img src="./images//patiants/2.jpg" alt="Alice Johnson" class="patient-avatar">
+                <div class="patient-info">
+                    <div class="patient-name">Mrs. Alice Johnson</div>
+                    <div class="patient-location">Meadowville</div>
+                </div>
+            </div>
+            <div class="patient-item">
+                <img src="./images//patiants/3.jpg" alt="Robert Smith" class="patient-avatar">
+                <div class="patient-info">
+                    <div class="patient-name">Mr. Robert Smith</div>
+                    <div class="patient-location">Greenfield</div>
+                </div>
+            </div>
+            <div class="patient-item">
+                <img src="./images//patiants/4.jpg" alt="Robert Smith" class="patient-avatar">
+                <div class="patient-info">
+                    <div class="patient-name">Mr. Robert Smith</div>
+                    <div class="patient-location">Greenfield</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

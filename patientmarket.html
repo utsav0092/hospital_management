@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eres - Patients Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #e8f0f0;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 60px;
+            background: white;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .sidebar i {
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            padding: 20px;
+        }
+
+        .header1 {
+            margin-bottom: 30px;
+        }
+
+        .main_heading {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .paragraph {
+            color: #666;
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            gap: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .profile-section {
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .info-section {
+            padding: 10px;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .additional-info {
+            padding: 10px;
+        }
+
+        .medicine-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .medicine-list {
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .medicine-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .medicine-table th,
+        .medicine-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .medicine-table th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="./index.html"><i class="fas fa-th"></i></a>
+        <i class="fas fa-user"></i>
+        <i class="fas fa-shopping-bag"></i>
+        <a href="./chat.html"><i class="fas fa-envelope"></i></a>
+        <a href="./medicine.html"><i class="fas fa-tv"></i></a>
+    </div>
+
+    <div class="main-content">
+        <div class="header1">
+            <h1 class="main_heading">Medicine Management</h1>
+            <p class="paragraph">Manage your hospital's medicine inventory</p>
+        </div>
+
+        <div class="header">
+            <!-- Profile Photo Section -->
+            <div class="profile-section">
+                <img id="userProfileImage" src="./images/patiants/1.jpg" alt="Profile" class="profile-image">
+            </div>
+
+            <!-- Basic Info Section -->
+            <div class="info-section">
+                <div class="info-item">
+                    <div class="info-label">Name:</div>
+                    <div id="userName" class="info-value">Rameshkumar Rao</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email:</div>
+                    <div id="userEmail" class="info-value">RR5252@gmail.com</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Mobile:</div>
+                    <div id="userPhone" class="info-value">+91 78978 44525</div>
+                </div>
+            </div>
+
+            <!-- Additional Info Section -->
+            <div class="additional-info">
+                <div class="info-item">
+                    <div class="info-label">Gender:</div>
+                    <div id="userGender" class="info-value">Male</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Assign Doctor:</div>
+                    <div id="userSpecialty" class="info-value">DR Mr. Daulat Hussain</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Symptoms:</div>
+                    <div id="userSpecialty" class="info-value">Chest pain</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="medicine-section">
+            <h2>Medicine List</h2>
+            <div class="medicine-list">
+                <table class="medicine-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Manufacture Date</th>
+                            <th>Expiry Date</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medicineTableBody">
+                        <!-- Medicines will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Medicine Data
+        const medicines = [
+            { id: "M-001", name: "Paracetamol", manufactureDate: "2023-01-01", expiryDate: "2025-01-01", price: 50 },
+            { id: "M-002", name: "Aspirin", manufactureDate: "2022-05-15", expiryDate: "2024-05-15", price: 100 },
+            { id: "M-003", name: "Amoxicillin", manufactureDate: "2023-03-20", expiryDate: "2025-03-20", price: 150 }
+        ];
+
+        // Function to format dates
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString(undefined, options);
+        }
+
+        // Function to render medicines in the table
+        function renderMedicineTable() {
+            const medicineTableBody = document.getElementById('medicineTableBody');
+            medicineTableBody.innerHTML = '';
+
+            medicines.forEach((medicine) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${medicine.id}</td>
+                    <td>${medicine.name}</td>
+                    <td>${formatDate(medicine.manufactureDate)}</td>
+                    <td>${formatDate(medicine.expiryDate)}</td>
+                    <td>$${medicine.price}</td>
+                    <td><button class="buy-btn" onclick="buyMedicine('${medicine.name}')">Buy Now</button></td>
+                `;
+                medicineTableBody.appendChild(row);
+            });
+        }
+
+        // Buy Medicine Functionality
+        function buyMedicine(medicineName) {
+            alert(`You have selected to buy ${medicineName}. Proceed to payment.`);
+        }
+
+        // Initialize the medicine table on page load
+        renderMedicineTable();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who are you?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 48px auto;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 24px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .step {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .step.active {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .step-line {
+            width: 48px;
+            height: 4px;
+            background-color: #e2e8f0;
+        }
+
+        .cards {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            padding: 24px;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .patient-card {
+            background-color: #22c55e;
+        }
+
+        .patient-card:hover {
+            background-color: #16a34a;
+        }
+
+        .doctor-card {
+            background-color: #f87171;
+        }
+
+        .doctor-card:hover {
+            background-color: #ef4444;
+        }
+
+        .card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-text h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .numbers {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .count {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .growth {
+            opacity: 0.8;
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer {
+            margin-top: 32px;
+            color: #4b5563;
+        }
+
+        .footer strong {
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                margin: 24px auto;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Who are you?</h1>
+        </div>
+
+        <div class="cards">
+            <a href="patientsinformation.html" class="card patient-card">
+                <div class="card-content">
+                    <div class="card-text">
+                        <h2>Patient Registration</h2>
+                        <div class="numbers">
+                            <span class="count">100k +</span>
+                            <span class="growth">+40%</span>
+                        </div>
+                    </div>
+                    <div class="icon">
+                        ❤
+                    </div>
+                </div>
+            </a>
+
+            <a href="doctorinformation.html" class="card doctor-card">
+                <div class="card-content">
+                    <div class="card-text">
+                        <h2>Doctor Registration</h2>
+                        <div class="numbers">
+                            <span class="count">100 +</span>
+                            <span class="growth">+14%</span>
+                        </div>
+                    </div>
+                    <div class="icon">
+                        👨‍⚕
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Welcome to <strong>Who are you?</strong> where compassionate care meets exceptional medical expertise.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

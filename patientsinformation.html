@@ -1,0 +1,266 @@
+<!-- Patient Information -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information Page</title>
+    <style>
+        /* General reset */
+        body,
+        h1,
+        p,
+        label,
+        input,
+        select,
+        textarea,
+        button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #ecf0f1;
+            /* Light text for contrast */
+            padding: 20px;
+        }
+
+        /* Centering the form */
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+            background: #ffffff;
+            /* White form container */
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            /* 3D shadow effect */
+            transform: perspective(1000px) rotateX(2deg);
+            /* 3D effect */
+            padding: 30px;
+        }
+
+        /* Patient Image */
+        .patient-image-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .patient-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* Circular image */
+            object-fit: cover;
+            border: 5px solid #ecf0f1;
+            /* White border */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow for 3D effect */
+            display: block;
+        }
+
+        #image-upload {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        /* Header */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            /* Deep navy blue */
+            font-family: 'Merriweather', serif;
+            /* Elegant font for headers */
+            margin-bottom: 25px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            color: #34495e;
+            /* Muted navy blue */
+        }
+
+        /* Input fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #dcdde1;
+            /* Light gray border */
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: #f7f9fa;
+            /* Slightly tinted background */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* 3D inset shadow */
+        }
+
+        /* Input focus */
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #74b9ff;
+            /* Light blue focus color */
+            box-shadow: 0 0 8px rgba(116, 185, 255, 0.6);
+        }
+
+        /* Submit button */
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            /* Beautiful blue gradient */
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        /* Button hover effect */
+        button:hover {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                transform: none;
+                /* Disable 3D effect on smaller screens */
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Patient Image Upload -->
+        <div class="patient-image-container">
+            <img id="patient-image" src="https://via.placeholder.com/150" alt="Patient" class="patient-image">
+            <input type="file" id="image-upload" accept=".jpg, .jpeg" onchange="previewImage(event)">
+        </div>
+        <h1>Patient Information</h1>
+        <form>
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Enter full name" required>
+            </div>
+            <!-- Email Address -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required>
+            </div>
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+            </div>
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">--Select Gender--</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address" placeholder="Enter address" rows="4" required></textarea>
+            </div>
+            <!-- Select Doctor based on Specialty -->
+            <div class="form-group">
+                <label for="doctor">Select Doctor</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">--Select Doctor--</option>
+                    <!-- Cardiology -->
+                    <option value="dr-john">Dr. John Doe - Cardiologist</option>
+                    <!-- Neurology -->
+                    <option value="dr-susan">Dr. Susan Lee - Neurologist</option>
+                    <!-- Orthopedics -->
+                    <option value="dr-mike">Dr. Mike Richards - Orthopedist</option>
+                    <!-- Pediatrics -->
+                    <option value="dr-sarah">Dr. Sarah White - Pediatrician</option>
+                    <!-- Dermatology -->
+                    <option value="dr-jane">Dr. Jane Smith - Dermatologist</option>
+                    <!-- Psychiatry -->
+                    <option value="dr-alex">Dr. Alex Taylor - Psychiatrist</option>
+                    <!-- General Medicine -->
+                    <option value="dr-emily">Dr. Emily Green - General Practitioner</option>
+                    <!-- Gynecology -->
+                    <option value="dr-hannah">Dr. Hannah Brown - Gynecologist</option>
+                    <!-- Urology -->
+                    <option value="dr-charles">Dr. Charles King - Urologist</option>
+                    <!-- Oncology -->
+                    <option value="dr-oliver">Dr. Oliver Grey - Oncologist</option>
+                    <!-- Endocrinology -->
+                    <option value="dr-isabella">Dr. Isabella White - Endocrinologist</option>
+                </select>
+            </div>
+            <!-- Symptoms -->
+            <div class="form-group">
+                <label for="symptoms">Symptoms</label>
+                <textarea id="symptoms" name="symptoms" placeholder="Enter symptoms" rows="4" required></textarea>
+            </div>
+            <!-- Medical History -->
+            <div class="form-group">
+                <label for="medical-history">Medical History</label>
+                <textarea id="medical-history" name="medical-history" placeholder="Enter medical history" rows="4"
+                    required></textarea>
+            </div>
+            <!-- Submit Button -->
+            <button type="submit"><a href="./dashboard2.html" style="text-decoration: none;">Submit</a></button>
+        </form>
+    </div>
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const patientImage = document.getElementById('patient-image');
+                patientImage.src = reader.result; // Update the image source
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+
+</html>
